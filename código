@@ -1,0 +1,42 @@
+#include <stdio.h>
+#include <time.h>
+
+
+/*
+utilizandos da técnica de recursão para implementar o algoritmo, 
+A função hanoi recebe três parâmetros: o número de discos n, a torre de origem origem, 
+a torre de destino destino e a torre auxiliar auxiliar. Quando o número de discos for igual a 1, 
+movemos o disco da torre de origem para a torre de destino e encerramos a recursão. Caso contrário, 
+movemos n-1 discos da torre de origem para a torre auxiliar, 
+movemos o disco n da torre de origem para a torre de destino e movemos n-1 discos da torre auxiliar para a torre de destino. 
+
+*/
+
+void hanoi(int n, char origem, char destino, char auxiliar) {
+    if (n == 1) {
+        printf("Mover disco 1 da torre %c para a torre %c\n", origem, destino);
+        return;
+    }
+    hanoi(n-1, origem, auxiliar, destino);
+    printf("Mover disco %d da torre %c para a torre %c\n", n, origem, destino);
+    hanoi(n-1, auxiliar, destino, origem);
+}
+/*
+
+No main, definimos o número de discos como 1 e utilizamos a função clock para medir o tempo gasto para executar o algoritmo.
+A fórmula (1 << n) - 1 é utilizada para calcular o número de movimentos necessários para resolver o problema da Torre de Hanoi com n discos.
+Por fim, imprimimos o número de movimentos e o tempo gasto na execução do algoritmo. 
+
+*/
+int main() {
+    int n = 20; // número de discos
+    clock_t inicio, fim;
+    double tempo_gasto;
+    inicio = clock();
+    hanoi(n, 'A', 'C', 'B');
+    fim = clock();
+    tempo_gasto = (double) (fim - inicio) / CLOCKS_PER_SEC;
+    printf("Movimentos necessários: %d\n", (1 << n) - 1);
+    printf("Tempo gasto: %f segundos\n", tempo_gasto);
+    return 0;
+}
